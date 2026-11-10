@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accountant Settlement & Audit — Shammah Hotel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen p-4 md:p-8 font-sans">
+
+  <!-- Top Navigation Bar -->
+  <header class="max-w-7xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200">Finance & Auditing</span>
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Shammah Hotel — Shift Settlement & Audit</h1>
+      </div>
+      <p class="text-xs text-slate-500 mt-1">Daily revenue reconciliation, VAT reporting, and checkout audit trail.</p>
+    </div>
+
+    <!-- Quick Navigation Links -->
+    <nav class="flex items-center gap-2 text-xs">
+      <a href="cashier.html" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">🛎️ Cashier</a>
+      <a href="receipt.html" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">👤 Guest Receipt</a>
+      <a href="accountant.html" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-sm">📊 Accountant Audit</a>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto flex flex-col gap-6">
+
+    <!-- Top Stats Row (in KSh) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+        <p class="text-xs text-slate-500">Today's Settled Revenue</p>
+        <p class="text-xl font-bold font-mono text-slate-900 mt-1">KSh 184,500</p>
+        <span class="text-[11px] text-emerald-600 font-medium">↑ 12 checkouts settled</span>
+      </div>
+      <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+        <p class="text-xs text-slate-500">M-Pesa Collections</p>
+        <p class="text-xl font-bold font-mono text-emerald-600 mt-1">KSh 112,000</p>
+        <span class="text-[11px] text-slate-500">Till #88201 Verified</span>
+      </div>
+      <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+        <p class="text-xs text-slate-500">Card / Bank Settlement</p>
+        <p class="text-xl font-bold font-mono text-blue-600 mt-1">KSh 52,500</p>
+        <span class="text-[11px] text-slate-500">Batch auto-settled</span>
+      </div>
+      <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+        <p class="text-xs text-slate-500">Cash Drawer Total</p>
+        <p class="text-xl font-bold font-mono text-purple-600 mt-1">KSh 20,000</p>
+        <span class="text-[11px] text-emerald-600 font-medium">Drawer Balanced</span>
+      </div>
+    </div>
+
+    <!-- Settlement Log & Action Bar -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
+        <div>
+          <h3 class="font-semibold text-sm text-slate-900">End-of-Shift Checkout Audit Trail</h3>
+          <p class="text-xs text-slate-500">November 10, 2026 • Shift: Morning / Afternoon Front Desk</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="alert('Exporting CSV for Accounting / Tax audit...')" class="px-3 py-1.5 text-xs font-medium border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-700 transition">
+            📥 Export CSV
+          </button>
+          <button onclick="alert('Shift closed successfully.')" class="px-3 py-1.5 text-xs font-semibold bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+            ✓ Lock & Close Shift
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50 text-slate-500 border-b border-slate-200 uppercase font-semibold">
+            <tr>
+              <th class="p-3">Time</th>
+              <th class="p-3">Payment Method</th>
+              <th class="p-3">Room Rev</th>
+              <th class="p-3">Incidentals</th>
+              <th class="p-3">VAT (16%)</th>
+              <th class="p-3 text-right">Total Settled</th>
+              <th class="p-3 text-center">Receipt Sent</th>
+              <th class="p-3 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-mono">
+            <tr>
+              <td class="p-3 text-slate-500">11:15 AM</td>
+              <td class="p-3 font-sans"><span class="px-2 py-0.5 rounded text-[11px] bg-emerald-50 text-emerald-700 font-medium">M-Pesa (QK789...)</span></td>
+              <td class="p-3">KSh 19,500</td>
+              <td class="p-3">KSh 5,550</td>
+              <td class="p-3">KSh 4,008</td>
+              <td class="p-3 text-right font-bold text-slate-900">KSh 29,058</td>
+              <td class="p-3 text-center font-sans"><span class="text-emerald-600 font-medium">💬 WhatsApp</span></td>
+              <td class="p-3 text-center font-sans"><span class="text-emerald-600 font-medium">Closed</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 text-slate-500">10:48 AM</td>
+              <td class="p-3 font-sans"><span class="px-2 py-0.5 rounded text-[11px] bg-emerald-50 text-emerald-700 font-medium">Cash Drawer</span></td>
+              <td class="p-3">KSh 12,000</td>
+              <td class="p-3">KSh 1,800</td>
+              <td class="p-3">KSh 2,208</td>
+              <td class="p-3 text-right font-bold text-slate-900">KSh 16,008</td>
+              <td class="p-3 text-center font-sans"><span class="text-slate-400">🖨️ Print</span></td>
+              <td class="p-3 text-center font-sans"><span class="text-emerald-600 font-medium">Closed</span></td>
+            </tr>
+            <tr>
+              <td class="p-3 text-slate-500">10:12 AM</td>
+              <td class="p-3 font-sans"><span class="px-2 py-0.5 rounded text-[11px] bg-blue-50 text-blue-700 font-medium">Visa Card</span></td>
+              <td class="p-3">KSh 15,000</td>
+              <td class="p-3">KSh 2,400</td>
+              <td class="p-3">KSh 2,784</td>
+              <td class="p-3 text-right font-bold text-slate-900">KSh 20,184</td>
+              <td class="p-3 text-center font-sans"><span class="text-emerald-600 font-medium">💬 WhatsApp + Email</span></td>
+              <td class="p-3 text-center font-sans"><span class="text-emerald-600 font-medium">Closed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

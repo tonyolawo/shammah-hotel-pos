@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shammah Hotel - POS Checkout Demo Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen p-6 md:p-12 font-sans flex items-center justify-center">
+
+  <div class="max-w-4xl w-full space-y-8">
+    <div class="text-center space-y-2">
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl shadow-sm">🏨</div>
+      <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Shammah Hotel — POS Checkout Demo</h1>
+      <p class="text-sm text-slate-500 max-w-lg mx-auto">Click any of the standalone user flows below to demonstrate how the checkout system works for different stakeholders.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Card 1: Front-Desk Cashier -->
+      <a href="cashier.html" class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-blue-500 transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl group-hover:scale-110 transition">🛎️</div>
+          <h2 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition">Front-Desk Cashier</h2>
+          <p class="text-xs text-slate-500 leading-relaxed">Add room stay charges by dates, append incidentals, choose payment method (Cash, Card, M-Pesa), and dispatch WhatsApp receipts.</p>
+        </div>
+        <div class="mt-6 flex items-center text-xs font-semibold text-blue-600 gap-1">
+          <span>Open Cashier Screen</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <!-- Card 2: Guest View -->
+      <a href="receipt.html" class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-emerald-500 transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:scale-110 transition">👤</div>
+          <h2 class="text-base font-bold text-slate-900 group-hover:text-emerald-600 transition">Guest Receipt Display</h2>
+          <p class="text-xs text-slate-500 leading-relaxed">Clean customer-facing receipt showing the itemized stay breakdown, 16% VAT, payment method used, and WhatsApp delivery confirmation.</p>
+        </div>
+        <div class="mt-6 flex items-center text-xs font-semibold text-emerald-600 gap-1">
+          <span>Open Guest Receipt</span>
+          <span>→</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Accountant Audit -->
+      <a href="accountant.html" class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-purple-500 transition flex flex-col justify-between">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition">📊</div>
+          <h2 class="text-base font-bold text-slate-900 group-hover:text-purple-600 transition">Accountant Settlement</h2>
+          <p class="text-xs text-slate-500 leading-relaxed">Daily revenue stats, M-Pesa and card collections, cash drawer reconciliation, CSV exports, and end-of-shift lockouts.</p>
+        </div>
+        <div class="mt-6 flex items-center text-xs font-semibold text-purple-600 gap-1">
+          <span>Open Accountant View</span>
+          <span>→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="text-center text-xs text-slate-400">
+      Currency: <strong>Kenyan Shilling (KSh)</strong> • Tax: <strong>16% VAT</strong> • Integrated with <strong>WhatsApp & M-Pesa</strong>
+    </div>
+  </div>
+
+</body>
+</html>

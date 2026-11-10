@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Front-Desk Cashier Checkout — Shammah Hotel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen p-4 md:p-8 font-sans">
+
+  <!-- Top Navigation Bar -->
+  <header class="max-w-7xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">Front-Desk Terminal</span>
+        <h1 class="text-2xl font-bold tracking-tight text-slate-900">Shammah Hotel — Guest Checkout</h1>
+      </div>
+      <p class="text-xs text-slate-500 mt-1">Room charge posting, incidental management, and checkout settlement.</p>
+    </div>
+
+    <!-- Quick Navigation Links to other demo pages -->
+    <nav class="flex items-center gap-2 text-xs">
+      <a href="cashier.html" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-sm">🛎️ Cashier</a>
+      <a href="receipt.html" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">👤 Guest Receipt</a>
+      <a href="accountant.html" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">📊 Accountant Audit</a>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- Charges Ledger & Actions (8 Cols) -->
+    <section class="lg:col-span-8 flex flex-col gap-5">
+      <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-3 bg-white">
+          <div>
+            <h2 class="font-semibold text-sm text-slate-900">Itemized Charges Management</h2>
+            <p class="text-xs text-slate-500">Post room stays with date pickers or append incidentals</p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="toggleRoomModal(true)" class="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1 shadow-sm">
+              🛏️ + Add Room Charge
+            </button>
+            <button onclick="toggleIncidentalModal(true)" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1 shadow-sm">
+              🍸 + Add Incidental
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-500 border-b border-slate-200 uppercase font-semibold">
+              <tr>
+                <th class="p-3">Dates / Time</th>
+                <th class="p-3">Description</th>
+                <th class="p-3">Category</th>
+                <th class="p-3 text-right">Amount</th>
+                <th class="p-3 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="charges-body" class="divide-y divide-slate-100">
+              <tr data-type="room" data-amount="19500" data-nights="3">
+                <td class="p-3 text-slate-500 font-mono">Nov 07 → Nov 10</td>
+                <td class="p-3 font-medium text-slate-900">Deluxe Suite (3 Nights @ KSh 6,500/night)</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-blue-50 text-blue-700 font-medium">Room Stay</span></td>
+                <td class="p-3 text-right font-mono font-medium text-slate-900">KSh 19,500</td>
+                <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+              </tr>
+              <tr data-type="incidental" data-amount="3200" data-nights="0">
+                <td class="p-3 text-slate-500 font-mono">Nov 08</td>
+                <td class="p-3 font-medium text-slate-900">Shammah Restaurant (Dinner & Drinks)</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-amber-50 text-amber-700 font-medium">F&B</span></td>
+                <td class="p-3 text-right font-mono font-medium text-slate-900">KSh 3,200</td>
+                <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+              </tr>
+              <tr data-type="incidental" data-amount="850" data-nights="0">
+                <td class="p-3 text-slate-500 font-mono">Nov 09</td>
+                <td class="p-3 font-medium text-slate-900">Minibar (Beverages & Snacks)</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-purple-50 text-purple-700 font-medium">Minibar</span></td>
+                <td class="p-3 text-right font-mono font-medium text-slate-900">KSh 850</td>
+                <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+              </tr>
+              <tr data-type="incidental" data-amount="1500" data-nights="0">
+                <td class="p-3 text-slate-500 font-mono">Nov 10</td>
+                <td class="p-3 font-medium text-slate-900">Late Checkout Fee (2 Hours)</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-emerald-50 text-emerald-700 font-medium">Front Desk</span></td>
+                <td class="p-3 text-right font-mono font-medium text-slate-900">KSh 1,500</td>
+                <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Totals Bar -->
+        <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-1.5 text-xs">
+          <div class="flex justify-between text-slate-600">
+            <span>Subtotal:</span>
+            <span id="cashier-subtotal" class="font-mono font-semibold text-slate-900">KSh 25,050</span>
+          </div>
+          <div class="flex justify-between text-slate-600">
+            <span>VAT (16%):</span>
+            <span id="cashier-taxes" class="font-mono font-semibold text-slate-900">KSh 4,008</span>
+          </div>
+          <div class="pt-2 border-t border-slate-200 flex justify-between items-center text-sm font-bold">
+            <span class="text-slate-900">Total Due:</span>
+            <span id="cashier-total" class="font-mono text-base text-blue-600">KSh 29,058</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cashier Side Panel: Payment Selector & Receipt Dispatch (4 Cols) -->
+    <section class="lg:col-span-4 flex flex-col gap-5">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col justify-between h-full">
+        <div>
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+            <h2 class="font-semibold text-sm text-slate-900">Payment Recording</h2>
+            <span id="cashier-selected-label" class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">💵 Cash Selected</span>
+          </div>
+
+          <!-- Payment Method Selection -->
+          <div class="mt-4">
+            <label class="block text-xs font-semibold text-slate-700 mb-2">Select Payment Method</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="selectCashierPayment('cash')" id="cashier-pay-cash" class="p-3 border-2 border-blue-600 bg-blue-50/50 rounded-xl text-center flex flex-col items-center gap-1 transition">
+                <span class="text-lg">💵</span>
+                <span class="text-xs font-bold text-slate-900">Cash</span>
+              </button>
+              <button onclick="selectCashierPayment('card')" id="cashier-pay-card" class="p-3 border border-slate-200 hover:border-blue-500 rounded-xl text-center flex flex-col items-center gap-1 transition">
+                <span class="text-lg">💳</span>
+                <span class="text-xs font-semibold text-slate-700">Card</span>
+              </button>
+              <button onclick="selectCashierPayment('mpesa')" id="cashier-pay-mpesa" class="p-3 border border-slate-200 hover:border-blue-500 rounded-xl text-center flex flex-col items-center gap-1 transition">
+                <span class="text-lg">📱</span>
+                <span class="text-xs font-semibold text-slate-700">M-Pesa</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Receipt Dispatch Settings -->
+          <div class="mt-6 space-y-3">
+            <label class="block text-xs font-semibold text-slate-700">Receipt Dispatch to Guest</label>
+            
+            <!-- WhatsApp Option -->
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2 text-xs">
+              <label class="flex items-center gap-2 cursor-pointer font-medium text-slate-800">
+                <input type="checkbox" id="cashier-check-whatsapp" checked class="rounded border-slate-300 text-emerald-600">
+                <span class="flex items-center gap-1.5">
+                  <span>💬</span>
+                  <span>Send WhatsApp Receipt</span>
+                </span>
+              </label>
+              <input type="text" id="cashier-whatsapp-number" value="+254 712 345 678" class="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs font-mono text-slate-900" placeholder="+254 7XX XXX XXX">
+            </div>
+
+            <!-- Thermal Printing & Email -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 cursor-pointer text-slate-700">
+                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                <span>🖨️ Thermal Print</span>
+              </label>
+              <label class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 cursor-pointer text-slate-700">
+                <input type="checkbox" checked class="rounded border-slate-300 text-blue-600">
+                <span>✉️ Email PDF</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-slate-200 mt-6">
+          <button onclick="completeCheckoutCashier()" id="btn-cashier-settle" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs transition shadow flex items-center justify-center gap-2">
+            <span>Complete Checkout & Send Receipt</span>
+          </button>
+          <p class="text-center text-[11px] text-slate-400 mt-2">Logs payment and delivers receipt automatically</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD ROOM CHARGE -->
+  <div id="room-charge-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 shadow-xl">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+        <div>
+          <h3 class="font-bold text-sm text-slate-900">🛏️ Add Room Stay Charge</h3>
+          <p class="text-xs text-slate-500">Post room rate by selected date range</p>
+        </div>
+        <button onclick="toggleRoomModal(false)" class="text-sm text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <div class="py-4 space-y-3.5 text-xs">
+        <div>
+          <label class="block text-slate-600 mb-1">Room Type</label>
+          <select id="modal-room-type" onchange="onRoomTypeChange()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+            <option value="Deluxe Room" data-rate="6500">Deluxe Room (KSh 6,500/night)</option>
+            <option value="Executive Suite" data-rate="9500">Executive Suite (KSh 9,500/night)</option>
+            <option value="Standard Room" data-rate="4500">Standard Room (KSh 4,500/night)</option>
+            <option value="Family Villa" data-rate="14000">Family Villa (KSh 14,000/night)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-600 mb-1">Check-in Date</label>
+            <input type="date" id="modal-date-from" value="2026-11-10" onchange="calcNightsFromDates()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-mono">
+          </div>
+          <div>
+            <label class="block text-slate-600 mb-1">Check-out Date</label>
+            <input type="date" id="modal-date-to" value="2026-11-12" onchange="calcNightsFromDates()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-600 mb-1">Total Nights</label>
+            <input type="number" id="modal-nights-count" value="2" min="1" readonly class="w-full bg-slate-100 border border-slate-200 rounded-lg p-2 text-xs font-mono text-slate-500">
+          </div>
+          <div>
+            <label class="block text-slate-600 mb-1">Rate per Night (KSh)</label>
+            <input type="number" id="modal-night-rate" value="6500" oninput="calcRoomChargePreview()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-mono">
+          </div>
+        </div>
+
+        <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between">
+          <span class="text-xs text-slate-700 font-medium">Calculated Charge:</span>
+          <span id="modal-charge-preview" class="font-mono font-bold text-sm text-blue-600">KSh 13,000</span>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 flex justify-end gap-2 text-xs">
+        <button onclick="toggleRoomModal(false)" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600">Cancel</button>
+        <button onclick="postRoomCharge()" class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">Post Room Charge</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD INCIDENTAL -->
+  <div id="incidental-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 shadow-xl">
+      <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+        <h3 class="font-bold text-sm text-slate-900">🍸 Add Incidentals / Service</h3>
+        <button onclick="toggleIncidentalModal(false)" class="text-sm text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+
+      <div class="py-4 space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-600 mb-1">Select Preset Category</label>
+          <select id="incidental-item" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+            <option value="Restaurant - Dinner Buffet (KSh 2,500)" data-price="2500" data-cat="F&B">Shammah Restaurant: Dinner Buffet (KSh 2,500)</option>
+            <option value="Laundry & Dry Cleaning (KSh 1,200)" data-price="1200" data-cat="Service">Laundry: Wash & Press (KSh 1,200)</option>
+            <option value="Minibar - Wine & Drinks (KSh 1,800)" data-price="1800" data-cat="Minibar">Minibar: Wine & Drinks (KSh 1,800)</option>
+            <option value="Lost Key Card Replacement (KSh 500)" data-price="500" data-cat="Fee">Fee: Keycard Replacement (KSh 500)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">Date</label>
+          <input type="date" value="2026-11-10" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs font-mono">
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-200 flex justify-end gap-2 text-xs">
+        <button onclick="toggleIncidentalModal(false)" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600">Cancel</button>
+        <button onclick="addSelectedIncidental()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">Post to Folio</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const vatRate = 0.16;
+    let selectedCashierPaymentMethod = 'cash';
+
+    function formatKsh(val) {
+      return 'KSh ' + Math.round(val).toLocaleString();
+    }
+
+    function selectCashierPayment(method) {
+      selectedCashierPaymentMethod = method;
+      const labels = { cash: '💵 Cash', card: '💳 Card', mpesa: '📱 M-Pesa' };
+      document.getElementById('cashier-selected-label').innerText = `${labels[method]} Selected`;
+
+      ['cash', 'card', 'mpesa'].forEach(m => {
+        const btn = document.getElementById(`cashier-pay-${m}`);
+        if (m === method) {
+          btn.className = "p-3 border-2 border-blue-600 bg-blue-50/50 rounded-xl text-center flex flex-col items-center gap-1 transition";
+        } else {
+          btn.className = "p-3 border border-slate-200 hover:border-blue-500 rounded-xl text-center flex flex-col items-center gap-1 transition";
+        }
+      });
+    }
+
+    function completeCheckoutCashier() {
+      const waNumber = document.getElementById('cashier-whatsapp-number').value;
+      const sendWa = document.getElementById('cashier-check-whatsapp').checked;
+      let msg = `✅ Settlement Complete at Shammah Hotel!\n- Payment: ${selectedCashierPaymentMethod.toUpperCase()}\n- Total: ${document.getElementById('cashier-total').innerText}\n- Printed receipt triggered`;
+      if (sendWa) msg += `\n- WhatsApp receipt sent to ${waNumber}`;
+      alert(msg);
+      window.location.href = "receipt.html";
+    }
+
+    function recalculateLedger() {
+      const rows = document.querySelectorAll('#charges-body tr');
+      let subtotal = 0;
+      rows.forEach(r => {
+        subtotal += parseFloat(r.getAttribute('data-amount')) || 0;
+      });
+
+      const taxes = subtotal * vatRate;
+      const totalDue = subtotal + taxes;
+
+      document.getElementById('cashier-subtotal').innerText = formatKsh(subtotal);
+      document.getElementById('cashier-taxes').innerText = formatKsh(taxes);
+      document.getElementById('cashier-total').innerText = formatKsh(totalDue);
+      document.getElementById('btn-cashier-settle').innerText = `Complete Checkout & Send Receipt (${formatKsh(totalDue)})`;
+    }
+
+    function removeRow(btn) {
+      btn.closest('tr').remove();
+      recalculateLedger();
+    }
+
+    function toggleIncidentalModal(show) {
+      document.getElementById('incidental-modal').classList.toggle('hidden', !show);
+    }
+
+    function toggleRoomModal(show) {
+      document.getElementById('room-charge-modal').classList.toggle('hidden', !show);
+      if (show) calcNightsFromDates();
+    }
+
+    function onRoomTypeChange() {
+      const select = document.getElementById('modal-room-type');
+      document.getElementById('modal-night-rate').value = select.options[select.selectedIndex].dataset.rate;
+      calcRoomChargePreview();
+    }
+
+    function calcNightsFromDates() {
+      const d1 = new Date(document.getElementById('modal-date-from').value);
+      const d2 = new Date(document.getElementById('modal-date-to').value);
+      let nights = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
+      if (isNaN(nights) || nights < 1) nights = 1;
+      document.getElementById('modal-nights-count').value = nights;
+      calcRoomChargePreview();
+    }
+
+    function calcRoomChargePreview() {
+      const nights = parseInt(document.getElementById('modal-nights-count').value) || 1;
+      const rate = parseFloat(document.getElementById('modal-night-rate').value) || 0;
+      document.getElementById('modal-charge-preview').innerText = formatKsh(nights * rate);
+    }
+
+    function postRoomCharge() {
+      const d1Val = document.getElementById('modal-date-from').value;
+      const d2Val = document.getElementById('modal-date-to').value;
+      const nights = parseInt(document.getElementById('modal-nights-count').value) || 1;
+      const rate = parseFloat(document.getElementById('modal-night-rate').value) || 0;
+      const totalAmt = nights * rate;
+      const roomSelect = document.getElementById('modal-room-type');
+      const roomName = roomSelect.options[roomSelect.selectedIndex].value;
+
+      const d1 = new Date(d1Val + 'T00:00:00');
+      const d2 = new Date(d2Val + 'T00:00:00');
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const dateLabel = `${months[d1.getMonth()]} ${String(d1.getDate()).padStart(2, '0')} → ${months[d2.getMonth()]} ${String(d2.getDate()).padStart(2, '0')}`;
+
+      const tbody = document.getElementById('charges-body');
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-type', 'room');
+      tr.setAttribute('data-amount', totalAmt);
+      tr.setAttribute('data-nights', nights);
+      tr.innerHTML = `
+        <td class="p-3 text-slate-500 font-mono">${dateLabel}</td>
+        <td class="p-3 font-medium text-slate-900">${roomName} (${nights} Night${nights > 1 ? 's' : ''} @ KSh ${rate.toLocaleString()}/night)</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-blue-50 text-blue-700 font-medium">Room Stay</span></td>
+        <td class="p-3 text-right font-mono font-medium text-slate-900">${formatKsh(totalAmt)}</td>
+        <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+      `;
+      tbody.appendChild(tr);
+      recalculateLedger();
+      toggleRoomModal(false);
+    }
+
+    function addSelectedIncidental() {
+      const select = document.getElementById('incidental-item');
+      const text = select.options[select.selectedIndex].text;
+      const price = parseFloat(select.options[select.selectedIndex].dataset.price);
+      const cat = select.options[select.selectedIndex].dataset.cat;
+
+      const tbody = document.getElementById('charges-body');
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-type', 'incidental');
+      tr.setAttribute('data-amount', price);
+      tr.setAttribute('data-nights', 0);
+      tr.innerHTML = `
+        <td class="p-3 text-slate-500 font-mono">Nov 10</td>
+        <td class="p-3 font-medium text-slate-900">${text}</td>
+        <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] bg-purple-50 text-purple-700 font-medium">${cat}</span></td>
+        <td class="p-3 text-right font-mono font-medium text-slate-900">${formatKsh(price)}</td>
+        <td class="p-3 text-center"><button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 font-bold">✕</button></td>
+      `;
+      tbody.appendChild(tr);
+      recalculateLedger();
+      toggleIncidentalModal(false);
+    }
+
+    recalculateLedger();
+  </script>
+</body>
+</html>
