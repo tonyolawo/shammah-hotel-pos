@@ -1,12 +1,15 @@
 {
-  "name": "codebase",
+  "name": "shammah-hotel-pos",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
@@ -16,7 +19,8 @@
     "next": "16.4.6",
     "prisma": "5.22.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "tsx": "^4.23.15"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
