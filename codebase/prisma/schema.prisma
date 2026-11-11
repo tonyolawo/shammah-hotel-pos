@@ -1,0 +1,63 @@
+// Prisma schema for Shammah Hotel POS
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  passwordHash  String
+  name          String
+  role          String         // CASHIER, ACCOUNTANT, ADMIN
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  checkouts     Transaction[]
+}
+
+model Transaction {
+  id               String                 @id @default(uuid())
+  receiptNumber    String                 @unique // e.g. SHM-2026-0001
+  guestName        String                 @default("Valued Guest")
+  guestPhone       String?
+  guestEmail       String?
+  subtotal         Float
+  vatAmount        Float
+  totalAmount      Float
+  paymentMethod    String                 // CASH, CARD, MPESA
+  status           String                 @default("SETTLED") // PENDING, SETTLED, VOID
+  createdAt        DateTime               @default(now())
+  
+  cashierId        String?
+  cashier          User?                  @relation(fields: [cashierId], references: [id])
+  
+  items            FolioItem[]
+  deliveries       ReceiptDeliveryLog[]
+}
+
+model FolioItem {
+  id             String       @id @default(uuid())
+  transactionId  String
+  category       String       // ROOM, FNB, MINIBAR, SERVICE, FEE
+  description    String
+  datesLabel     String?      // e.g. "Nov 07 → Nov 10"
+  nights         Int          @default(0)
+  amount         Float
+  transaction    Transaction  @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+}
+
+model ReceiptDeliveryLog {
+  id             String       @id @default(uuid())
+  transactionId  String
+  channel        String       // EMAIL, WHATSAPP, SMS
+  recipient      String
+  status         String       @default("SENT") // QUEUED, SENT, FAILED
+  detail         String?
+  sentAt         DateTime     @default(now())
+  transaction    Transaction  @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+}
